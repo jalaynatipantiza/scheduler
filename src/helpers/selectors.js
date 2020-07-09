@@ -1,5 +1,3 @@
-import Appointment from "components/Appointment";
-
 export function getAppointmentsForDay(state, day) {
     let appointmentArr = state.days.filter(dayObject => dayObject.name === day)
     if(appointmentArr.length < 1) {
