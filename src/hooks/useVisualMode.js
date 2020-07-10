@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { create } from 'react-test-renderer';
 
 export default function useVisualMode (initial) {
   const [mode, setMode] = useState(initial);
@@ -9,6 +10,7 @@ export default function useVisualMode (initial) {
 
     setHistory(prev => replace ? [...prev.slice(0, prev.length -1), newMode]: [...prev, newMode])
   }
+  
   const back = () => {
     if(history.length > 1) {
       history.pop();

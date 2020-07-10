@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import DayList from "components/DayList"
 
 import "components/Application.scss";
+import "./Appointment/styles.scss"
 import Appointment from "components/Appointment/index";
 import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
