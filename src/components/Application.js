@@ -20,6 +20,29 @@ export default function Application(props) {
    interviewers: {}
   });
   
+  function bookInterview(id, interview) {
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+     return axios.put(`/api/appointments/${id}`, appointment)
+      .then(() => {setState({
+        ...state,
+        appointments
+      })})
+  }
+
+  function cancelInterview (id, interview) {
+
+
+
+    
+  }
   useEffect(() => {
     Promise.all([
       Promise.resolve(axios.get("/api/days")),
@@ -27,12 +50,13 @@ export default function Application(props) {
       Promise.resolve(axios.get("/api/interviewers"))
     ])
       .then((all) => {
-        // console.log(all[2].data);
+      
         setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
       })
   },[])
 
   
+
     const appointments = getAppointmentsForDay(state, state.day);
     const interviewers = getInterviewersForDay(state, state.day);
 
@@ -44,10 +68,11 @@ export default function Application(props) {
                 {...appointment} 
           interview={interview}
           interviewers={interviewers}
+          bookInterview={bookInterview}
         />
         );
     })
- 
+
   return (
     <main className="layout">
       <section className="sidebar">
