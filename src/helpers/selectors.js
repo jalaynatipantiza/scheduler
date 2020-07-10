@@ -20,3 +20,18 @@ export function getAppointmentsForDay(state, day) {
     }
     return results;
   }
+
+
+  export function getInterviewersForDay(state, day) {
+    let dayObject = state.days.filter(dayObj => dayObj.name === day)
+    if(dayObject.length < 1) {
+      return [];
+    }
+    let interviewersArr = dayObject[0].interviewers;
+    const results = interviewersArr.map((element) => {
+      return state.interviewers[`${element}`]
+    })
+    return results;
+  }
+
+ 
