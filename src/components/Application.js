@@ -65,6 +65,8 @@ export default function Application(props) {
 
     const schedule = appointments.map(appointment => {
       const interview = getInterview(state, appointment.interview);
+      console.log("right here", interview);
+      
         return(
           <Appointment 
             key={appointment.id}
@@ -76,7 +78,6 @@ export default function Application(props) {
         />
         );
     })
-
   return (
     <main className="layout">
       <section className="sidebar">
