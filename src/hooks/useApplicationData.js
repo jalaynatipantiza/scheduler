@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react"
 
-import getInterviewersForDay from "helpers/selectors";
 import axios from 'axios';
+import { increaseSpot, decreaseSpot } from "helpers/selectors";
 
 export default function useApplicationData(){
   const setDay = day => setState({ ...state, day }); 
@@ -37,33 +37,19 @@ export default function useApplicationData(){
       ...state.appointments,
       [id]: appointment
     };
-    let dayArr = state.days.filter(dayObject => dayObject.name === state.day)
-    
-    const updatedSpot = dayArr[0].spots - 1
-    const dayKey = dayArr[0].id - 1
-    
-    state.days[dayKey].spots = updatedSpot
-
      return axios.put(`/api/appointments/${id}`, appointment)
-      .then(() => {setState(
-        {
-        ...state,
-        appointments
-      })})
+      .then(() => {
+        const newState = decreaseSpot(state)
+        setState({...newState, appointments })}
+      )
   }
 
   const cancelInterview = (id) => {
     return axios.delete(`/api/appointments/${id}`)
-    .then (()=> {
-      let dayArr = state.days.filter(dayObject => dayObject.name === state.day)
-    
-      const updatedSpot = dayArr[0].spots + 1
-      const dayKey = dayArr[0].id - 1
-      
-      state.days[dayKey].spots = updatedSpot
-
+    .then (()=> { 
       state.appointments[id].interview = null;
-      setState({...state})
+      const newState = increaseSpot(state)
+      setState({...newState})
     })
   }
 

@@ -34,3 +34,23 @@ export function getAppointmentsForDay(state, day) {
     return results;
   }
  
+  export function increaseSpot(state) {
+    let dayArr = state.days.filter(dayObject => dayObject.name === state.day)
+
+    const updatedSpot = dayArr[0].spots + 1
+    const dayKey = dayArr[0].id - 1
+    
+     state.days[dayKey].spots = updatedSpot
+     return state;
+
+  }
+  export function decreaseSpot(state) {
+    let dayArr = state.days.filter(dayObject => dayObject.name === state.day)
+
+    const updatedSpot = dayArr[0].spots - 1
+    const dayKey = dayArr[0].id - 1
+    
+     state.days[dayKey].spots = updatedSpot
+     return state;
+
+  }
