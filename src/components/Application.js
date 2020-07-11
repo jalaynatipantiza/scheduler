@@ -20,7 +20,7 @@ export default function Application(props) {
    interviewers: {}
   });
   
-  function bookInterview(id, interview) {
+  function bookInterview(id, interview){
 
     const appointment = {
       ...state.appointments[id],
@@ -37,12 +37,15 @@ export default function Application(props) {
       })})
   }
 
-  function cancelInterview (id, interview) {
-
-
-
-    
+  const cancelInterview = (id) => {
+    return axios.delete(`/api/appointments/${id}`)
+    .then (()=> {
+      state.appointments[id].interview = null;
+      setState({...state})
+    })
   }
+
+
   useEffect(() => {
     Promise.all([
       Promise.resolve(axios.get("/api/days")),
@@ -69,6 +72,7 @@ export default function Application(props) {
           interview={interview}
           interviewers={interviewers}
           bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
         />
         );
     })
