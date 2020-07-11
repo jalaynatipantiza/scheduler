@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { create } from 'react-test-renderer';
 
 export default function useVisualMode (initial) {
   const [mode, setMode] = useState(initial);
