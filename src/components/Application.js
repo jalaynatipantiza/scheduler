@@ -28,11 +28,11 @@ export default function Application(props) {
           <Appointment 
             key={appointment.id}
                 {...appointment} 
-          interview={interview}
-          interviewers={interviewers}
-          bookInterview={bookInterview}
-          cancelInterview={cancelInterview}
-          editInterview={editInterview}
+            interview={interview}
+            interviewers={interviewers}
+            bookInterview={bookInterview}
+            cancelInterview={cancelInterview}
+            editInterview={editInterview}
         />
         );
     })

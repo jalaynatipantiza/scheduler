@@ -39,7 +39,7 @@ export function getAppointmentsForDay(state, day) {
     if(dayObj.name === state.day){
       return {
         ...dayObj,
-        spots:dayObj + step
+        spots: dayObj.spots + step
       }
     }
     return{
@@ -52,8 +52,8 @@ export function getAppointmentsForDay(state, day) {
   }
 }
 export function increaseSpot(state) {
-  updateSpot(state, 1)
+  return updateSpot(state, 1)
 }
 export function decreaseSpot(state) {
-  updateSpot(state, -1)
+  return updateSpot(state, -1)
 }

@@ -3,6 +3,9 @@ import {useState, useEffect} from "react"
 import axios from 'axios';
 import { increaseSpot, decreaseSpot } from "helpers/selectors";
 
+import "components/Application.scss";
+import "../components/Appointment/styles.scss";
+
 export default function useApplicationData(){
   const setDay = day => setState({ ...state, day }); 
 
@@ -26,7 +29,7 @@ export default function useApplicationData(){
       })
   },[])
 
-  const updateAppointment = (state, id, interview) => {
+  const updateAppointments = (id, interview, state) => {
     const appointment = {
       ...state.appointments[id],
       interview
@@ -35,35 +38,32 @@ export default function useApplicationData(){
       ...state.appointments,
       [id]: appointment
     };
-    return { appointments, appointment }
+    return { appointment, appointments}
   }
-
-  function bookInterview(id, interview){
-    const { appointment, appointments } = updateAppointment(state, id, interview)
+  const cancelInterview = (id) => {
+    return axios.delete(`/api/appointments/${id}`)
+    .then(() => {
+      const { appointments } = updateAppointments(id, null, state)
+      const newState = increaseSpot(state)
+      setState({...newState, appointments})
+    })
+  } 
+  function bookInterview(id, interview) {
+    const { appointments, appointment } = updateAppointments(id, interview, state)
     return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
-        const newState = decreaseSpot(state)
-        setState({...newState, appointments })}
-      )
-  }
-
-  const cancelInterview = (id) => {
-    const { appointments } = updateAppointment(state, id, null)
-    return axios.delete(`/api/appointments/${id}`)
-    .then (()=> { 
-      const newState = increaseSpot(state)
-      setState({...newState, appointments })
+      const newState = decreaseSpot(state)
+      setState({...newState, appointments})
     })
   }
-
-    function editInterview(id, interview) {
-    const { appointment, appointments } = updateAppointment(state, id, interview)
-      return axios.put(`/api/appointments/${id}`, appointment)
-      .then(() => {
-        setState({...state, appointments })}
-      )  
-
-    }
+  function editInterview(id, interview) {
+    const { appointments, appointment } = updateAppointments(id, interview, state)
+    return axios.put(`/api/appointments/${id}`, appointment)
+    .then(() => {
+      setState({...state, appointments})
+    })
+  }
+  
 
   return {
     state,
