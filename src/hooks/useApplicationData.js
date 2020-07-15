@@ -26,38 +26,50 @@ export default function useApplicationData(){
       })
   },[])
 
-
-  function bookInterview(id, interview){
-
+  const updateAppointment = (state, id, interview) => {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview
     };
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-     return axios.put(`/api/appointments/${id}`, appointment)
-      .then(() => {
+    return { appointments, appointment }
+  }
+
+  function bookInterview(id, interview){
+    const { appointment, appointments } = updateAppointment(state, id, interview)
+    return axios.put(`/api/appointments/${id}`, appointment)
+    .then(() => {
         const newState = decreaseSpot(state)
         setState({...newState, appointments })}
       )
   }
 
   const cancelInterview = (id) => {
+    const { appointments } = updateAppointment(state, id, null)
     return axios.delete(`/api/appointments/${id}`)
     .then (()=> { 
-      state.appointments[id].interview = null;
       const newState = increaseSpot(state)
-      setState({...newState})
+      setState({...newState, appointments })
     })
   }
 
+    function editInterview(id, interview) {
+    const { appointment, appointments } = updateAppointment(state, id, interview)
+      return axios.put(`/api/appointments/${id}`, appointment)
+      .then(() => {
+        setState({...state, appointments })}
+      )  
+
+    }
 
   return {
     state,
     setDay,
     bookInterview,
-    cancelInterview
+    cancelInterview,
+    editInterview
   }
 }

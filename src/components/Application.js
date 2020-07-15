@@ -13,7 +13,8 @@ export default function Application(props) {
     state,
     setDay,
     bookInterview,
-    cancelInterview
+    cancelInterview,
+    editInterview
   } = useApplicationData();
   
 
@@ -31,6 +32,7 @@ export default function Application(props) {
           interviewers={interviewers}
           bookInterview={bookInterview}
           cancelInterview={cancelInterview}
+          editInterview={editInterview}
         />
         );
     })
@@ -53,7 +55,8 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-         {schedule}     
+         {schedule}
+      <Appointment key="last" time="5pm"/>    
        </section>
     </main>
   );

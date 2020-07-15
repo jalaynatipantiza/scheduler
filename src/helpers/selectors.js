@@ -34,23 +34,26 @@ export function getAppointmentsForDay(state, day) {
     return results;
   }
  
-  export function increaseSpot(state) {
-    let dayArr = state.days.filter(dayObject => dayObject.name === state.day)
-
-    const updatedSpot = dayArr[0].spots + 1
-    const dayKey = dayArr[0].id - 1
-    
-     state.days[dayKey].spots = updatedSpot
-     return state;
-
+ function updateSpot(state, step) {
+  let updatedDays = state.days.map(dayObj => {
+    if(dayObj.name === state.day){
+      return {
+        ...dayObj,
+        spots:dayObj + step
+      }
+    }
+    return{
+      ...dayObj
+    }
+  })
+  return {
+    ...state,
+    days: updatedDays
   }
-  export function decreaseSpot(state) {
-    let dayArr = state.days.filter(dayObject => dayObject.name === state.day)
-
-    const updatedSpot = dayArr[0].spots - 1
-    const dayKey = dayArr[0].id - 1
-    
-     state.days[dayKey].spots = updatedSpot
-     return state;
-
-  }
+}
+export function increaseSpot(state) {
+  updateSpot(state, 1)
+}
+export function decreaseSpot(state) {
+  updateSpot(state, -1)
+}
