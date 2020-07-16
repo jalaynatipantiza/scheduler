@@ -35,22 +35,21 @@ export default function Appointment(props) {
       props.bookInterview(props.id, interview)
       .then(() => {transition(SHOW)})
       .catch(err => {transition(ERROR_SAVE, true)})
-  
     }
+
     const edit = (name, interviewer) => {
       const interview = {
         student: name,
         interviewer
       };
+
       transition(SAVING, true)
       props.editInterview(props.id, interview)
       .then(() => {transition(SHOW)})
       .catch(err => {transition(ERROR_SAVE, true)})
-
     }
 
     const onDelete = () => {
-
       transition(DELETING, true)
       props.cancelInterview(props.id)
       .then(() => {transition(EMPTY)})

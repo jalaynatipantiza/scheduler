@@ -4,6 +4,7 @@ describe("Appointments",() => {
     cy.visit("/")
     cy.contains("Monday")
   })
+  
   it("should book an interview", () => {
     cy.get("[alt=Add]").first().click()
 
@@ -37,7 +38,7 @@ describe("Appointments",() => {
     .click({force:true})
 
     cy.contains("Confirm").click();
-    
+
     cy.contains("Deleting").should("exist")
     cy.contains("Deleting").should("not.exist")
 
