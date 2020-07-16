@@ -1,4 +1,5 @@
 # Interview Scheduler
+A single page application to schdule all your interview appointments! This project uses React, Node, Express and Axios. 
 
 ## Setup
 
