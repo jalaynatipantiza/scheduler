@@ -1,3 +1,5 @@
+//Collaborated with Landon and Hafiz
+
 import {useState, useEffect} from "react"
 
 import axios from 'axios';
