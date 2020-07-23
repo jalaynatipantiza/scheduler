@@ -1,3 +1,5 @@
+//Collaborated with Landon and Hafiz
+
 export function getAppointmentsForDay(state, day) {
     let appointmentArr = state.days.filter(dayObject => dayObject.name === day)
     
